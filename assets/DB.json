@@ -1,0 +1,24 @@
+[
+  {
+    "name": "Pilea Peperomioides",
+    "description": "In Mini Prospect Planter",
+    "price": 50,
+    "amount": true,
+    "color": [
+      "white",
+      "red",
+      "green"
+    ]
+  },
+  {
+    "name": "Pilea Peperomioides",
+    "description": "In Mini Prospect Planter",
+    "price": 100,
+    "amount": false,
+    "color": [
+      "white",
+      "red",
+      "green"
+    ]
+  }
+]

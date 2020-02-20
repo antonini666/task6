@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task 6</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap" rel="stylesheet">
+  </head>
+
+  <body>
+    <header class="header">
+      <a href="index.html" class="logo">
+        <img src="assets/img/plant_87668.svg" alt="PlantShop">
+        <h2 class="title">MyPlantsShop</h2>
+      </a>
+      <a href="bag.html" class="basket">
+        <img src="assets/img/bag.svg" alt="">
+        <div class="badge"></div>
+      </a>
+    </header>
+    <div class="container">
+      <section class="control">
+        <button class="add-item button">Добавить товар</button>
+        <div class="filter">
+          <button class="filter__sort button">Цена ↑↓</button>
+          <button class="filter__amount button">В наличии</button>
+          <button class="filter__all button">Все товары</button>
+        </div>
+        <div class="new-item">
+          <div class="new-item__content">
+            <span class="close">&times;</span>
+            <input class="upload-file" type="file">
+            <input class="name" type="text" placeholder="Name">
+            <input class="description" type="text" placeholder="Description">
+            <input class="price" type="number" placeholder="Price">
+            <input class="amount" type="number" placeholder="Amount">
+            <button class="add-button button">Добавить</button>
+            <p class="warning">Заполните все поля</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="goods">
+        <div class="items"></div>
+      </section>
+    </div>
+
+    <script type="module" src="js/index.js"></script>
+  </body>
+
+</html>
