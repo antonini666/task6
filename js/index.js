@@ -28,7 +28,7 @@ const bagBadge = document.querySelector(".badge");
 
 //check the availability of data in localStorage
 if (localStorage.getItem("items") === null) {
-  localStorage.setItem("items", JSON.stringify(dataPlatns)); 
+  localStorage.setItem("items", JSON.stringify(dataPlatns));
 }
 
 //get data from localStorage
@@ -145,6 +145,7 @@ const getNewItem = () => {
   const price = document.querySelector(".new-item .price");
   const amount = document.querySelector(".new-item .amount");
   const image = document.querySelector(".upload-file");
+  const newImage = document.querySelector(".new-img");
   const warning = document.querySelector(".new-item__content .warning");
 
   openModal.addEventListener("click", () => {
@@ -170,8 +171,21 @@ const getNewItem = () => {
     }
   });
 
-  if (modalWindow.style.display === "") {
-  }
+  let imgSrc;
+
+  image.addEventListener("change", e => {
+    let input = e.target;
+
+    console.log(input);
+
+    let reader = new FileReader();
+    reader.onload = function() {
+      let dataURL = reader.result;
+      newImage.src = dataURL;
+      imgSrc = newImage.src;
+    };
+    reader.readAsDataURL(input.files[0]);
+  });
 
   addItemButton.addEventListener("click", e => {
     if (
@@ -193,7 +207,7 @@ const getNewItem = () => {
       price: +price.value,
       amount: +amount.value,
       images: [
-        { img: "assets/img/aloe-vera-1.jpg", color: "white", active: true },
+        { img: imgSrc, color: "white", active: true },
         { img: "assets/img/aloe-vera-2.jpg", color: "red", active: false },
         { img: "assets/img/aloe-vera-3.jpg", color: "green", active: false }
       ]

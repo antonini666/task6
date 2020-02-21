@@ -117,6 +117,12 @@ input {
   transform: translate(-50%);
 }
 
+.new-item__content .new-img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+}
+
 .control .close {
   position: absolute;
   line-height: 20px;
@@ -160,7 +166,9 @@ input {
 
 .item__image {
   display: none;
-  width: 100%;
+  width: 250px;
+  height: 300px;
+  object-fit: cover;
 }
 
 .item__info {
@@ -218,6 +226,12 @@ input {
 }
 .color-green {
   background-color: #4caf50;
+}
+.color-blue {
+  background-color: #2196f3;
+}
+.color-orange {
+  background-color: #ff5722;
 }
 
 .color-active {
