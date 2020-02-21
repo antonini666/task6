@@ -5,9 +5,9 @@ const dataPlatns = [
     price: 100.5,
     amount: 10,
     images: [
-      { img: "assets/img/aloe-vera-1.jpg", color: "white" },
-      { img: "assets/img/aloe-vera-2.jpg", color: "red" },
-      { img: "assets/img/aloe-vera-3.jpg", color: "green" }
+      { img: "assets/img/aloe-vera-1.jpg", color: "white", active: true },
+      { img: "assets/img/aloe-vera-2.jpg", color: "red", active: false },
+      { img: "assets/img/aloe-vera-3.jpg", color: "green", active: false }
     ]
   },
   {
@@ -16,20 +16,22 @@ const dataPlatns = [
     price: 35,
     amount: 0,
     images: [
-      { img: "assets/img/aloe-vera-1.jpg", color: "white" },
-      { img: "assets/img/aloe-vera-2.jpg", color: "red" },
-      { img: "assets/img/aloe-vera-3.jpg", color: "green" }
+      { img: "assets/img/aloe-vera-1.jpg", color: "white", active: false },
+      { img: "assets/img/aloe-vera-2.jpg", color: "red", active: true },
+      { img: "assets/img/aloe-vera-3.jpg", color: "green", active: false }
     ]
   }
-];
+]; //own data
 
 const items = document.querySelector(".items");
 const bagBadge = document.querySelector(".badge");
 
+//check the availability of data in localStorage
 if (localStorage.getItem("items") === null) {
-  localStorage.setItem("items", JSON.stringify(dataPlatns));
+  localStorage.setItem("items", JSON.stringify(dataPlatns)); 
 }
 
+//get data from localStorage
 let localStorageData = JSON.parse(localStorage.getItem("items"));
 
 const addItem = () => {
@@ -78,13 +80,43 @@ const addItem = () => {
     plant.images.map(i => {
       let image = document.createElement("img");
       let color = document.createElement("div");
-
       image.className = "item__image";
-      color.className = `color color-${i.color}`;
+
+      if (i.active) {
+        color.className = `color color-${i.color} color-active`;
+        image.style.display = "block";
+      } else {
+        color.className = `color color-${i.color}`;
+        image.style.display = "none";
+      }
 
       image.setAttribute("src", `${i.img}`);
       imageWrap.appendChild(image);
       colors.appendChild(color);
+    });
+
+    let pickButton = colors.querySelectorAll(".color");
+
+    for (let i = 0; i < pickButton.length; i++) {
+      pickButton[i].addEventListener("click", () => {
+        plant.images.map((item, id) => {
+          if (`color-${item.color}` === pickButton[i].classList[1]) {
+            item.active = true;
+            localStorage.setItem("items", JSON.stringify(localStorageData));
+            addItem();
+          } else {
+            item.active = false;
+            localStorage.setItem("items", JSON.stringify(localStorageData));
+            addItem();
+          }
+        });
+      });
+    }
+
+    buyItem.addEventListener("click", e => {
+      plant.amount = plant.amount - 1;
+      bagBadge.innerHTML = +bagBadge.innerHTML + 1;
+      addItem();
     });
 
     itemTopInfo.appendChild(itemTitle);
@@ -98,47 +130,6 @@ const addItem = () => {
     item.appendChild(imageWrap);
     item.appendChild(itemInfo);
     items.appendChild(item);
-
-    let pickImages = imageWrap.querySelectorAll(".item__image");
-    let pickButton = colors.querySelectorAll(".color");
-
-    if (
-      localStorage.getItem("active-color") === null ||
-      localStorage.getItem("active-img") === null
-    ) {
-      localStorage.setItem("active-color", "color-white");
-      localStorage.setItem("active-img", "assets/img/aloe-vera-1.jpg");
-    }
-    let colorActive = localStorage.getItem("active-color");
-    let imageActive = localStorage.getItem("active-img");
-
-    console.log(colorActive);
-    console.log(imageActive);
-
-    for (let i = 0; i < pickButton.length; i++) {
-      if (pickButton[i].classList[1] === colorActive) {
-        pickImages[i].style.display = "block";
-        pickButton[i].classList.add("color-active");
-      }
-
-      pickButton[i].addEventListener("click", () => {
-        for (let i = 0; i < pickImages.length; i++) {
-          pickImages[i].style.display = "none";
-          pickButton[i].classList.remove("color-active");
-        }
-        localStorage.setItem("active-color", pickButton[i].classList[1]);
-        localStorage.setItem("active-img", pickImages[i].getAttribute("src"));
-
-        pickImages[i].style.display = "block";
-        pickButton[i].classList.add("color-active");
-      });
-    }
-
-    buyItem.addEventListener("click", e => {
-      plant.amount = plant.amount - 1;
-      bagBadge.innerHTML = +bagBadge.innerHTML + 1;
-      addItem();
-    });
   });
 };
 
@@ -202,9 +193,9 @@ const getNewItem = () => {
       price: +price.value,
       amount: +amount.value,
       images: [
-        { img: "assets/img/aloe-vera-1.jpg", color: "white" },
-        { img: "assets/img/aloe-vera-2.jpg", color: "red" },
-        { img: "assets/img/aloe-vera-3.jpg", color: "green" }
+        { img: "assets/img/aloe-vera-1.jpg", color: "white", active: true },
+        { img: "assets/img/aloe-vera-2.jpg", color: "red", active: false },
+        { img: "assets/img/aloe-vera-3.jpg", color: "green", active: false }
       ]
     };
 
@@ -228,6 +219,7 @@ const sortPrice = () => {
     localStorageData.sort((a, b) => (a.price < b.price ? 1 : -1));
     isSortPrice = true;
   }
+
   addItem();
 };
 
